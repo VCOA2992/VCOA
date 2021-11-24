@@ -33,7 +33,7 @@ let allButtons = {};
 // Add channel in group
 bot.onText(/\/add (.+)/, async (msg, match) => {
   const chatId = msg.chat.id;
-  if (msg.chat.type !== "group") {
+  if (msg.chat.type !== "group" && msg.chat.type !== "supergroup") {
     return bot.sendMessage(
       chatId,
       "Sorry but this command is meant to be used only in groups"
@@ -99,7 +99,7 @@ bot.onText(/\/add (.+)/, async (msg, match) => {
 // Delete channel from group
 bot.onText(/\/del (.+)/, async (msg, match) => {
   const chatId = msg.chat.id;
-  if (msg.chat.type !== "group") {
+  if (msg.chat.type !== "group" && msg.chat.type !== "supergroup") {
     return bot.sendMessage(
       chatId,
       "Sorry but this command is meant to be used only in groups"
