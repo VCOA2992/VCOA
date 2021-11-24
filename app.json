@@ -29,5 +29,10 @@
       "description": "Database URL from https://cloud.mongodb.com/",
       "value": ""
     }
-  }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
 }
