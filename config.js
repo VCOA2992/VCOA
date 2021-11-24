@@ -1,6 +1,6 @@
 module.exports = {
   AUTHORIZED_USERS: process.env.AUTHORIZED_USERS || "",
-  API_ID: process.env.API_ID || 0,
+  APP_ID: process.env.APP_ID || 0,
   API_HASH: process.env.API_HASH || "",
   STRING_SESSION: process.env.STRING_SESSION || "",
   BOT_TOKEN: process.env.BOT_TOKEN || "",

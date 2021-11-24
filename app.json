@@ -3,5 +3,31 @@
   "description": "A barebone filter bot",
   "repository": "https://github.com/binamracode/filterbotheroku/node-js-getting-started",
   "logo": "https://node-js-sample.herokuapp.com/node.png",
-  "keywords": ["node", "telegram", "bot"]
+  "keywords": ["node", "telegram", "bot"],
+  "env": {
+    "AUTHORIZED_USERS": {
+      "description": "List of Authorized Users who can control this bot (Separate with spaces)",
+      "value": ""
+    },
+    "APP_ID": {
+      "description": "App ID of your telegram account (my.telegram.org)",
+      "value": ""
+    },
+    "API_HASH": {
+      "description": "API Hash of your telegram account (my.telegram.org)",
+      "value": ""
+    },
+    "STRING_SESSION": {
+      "description": "Your User Session",
+      "value": ""
+    },
+    "BOT_TOKEN": {
+      "description": "Token of your bot (@BotFather)",
+      "value": ""
+    },
+    "MONGODB_URI": {
+      "description": "Database URL from https://cloud.mongodb.com/",
+      "value": ""
+    }
+  }
 }

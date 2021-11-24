@@ -16,7 +16,7 @@ const { TelegramClient, Api } = require("telegram");
 const { StringSession } = require("telegram/sessions");
 const Group = require("./models/Group");
 
-const apiId = config.API_ID;
+const appId = config.APP_ID;
 const apiHash = config.API_HASH;
 const stringSession = new StringSession(config.STRING_SESSION);
 
@@ -24,7 +24,7 @@ let client;
 let allButtons = {};
 
 (async () => {
-  client = new TelegramClient(stringSession, apiId, apiHash, {
+  client = new TelegramClient(stringSession, appId, apiHash, {
     connectionRetries: 5,
   });
   await client.start();
