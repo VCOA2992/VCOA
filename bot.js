@@ -3,4 +3,7 @@ const config = require("./config");
 
 const token = config.BOT_TOKEN;
 
-module.exports = new TelegramBot(token, { polling: true });
+const port = process.env.PORT || 8080;
+const host = process.env.HOST;
+
+module.exports = new TelegramBot(token, { polling: true, webHook: {port: port, host: host }});
