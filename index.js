@@ -157,7 +157,7 @@ bot.on("message", async (msg) => {
   }
 
   const chatId = msg.chat.id;
-  if (msg.chat.type !== "group") {
+  if (msg.chat.type !== "group" && msg.chat.type !== "supergroup") {
     return;
   }
 
