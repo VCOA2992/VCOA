@@ -48,7 +48,6 @@ bot.onText(/\/add (.+)/, async (msg, match) => {
   }
 
   const resp = match[1];
-  console.log(match, resp);
 
   let obj = await Group.findOne({ chatId: chatId });
 
@@ -229,9 +228,14 @@ bot.on("message", async (msg) => {
 
   if (buttons.length > 10) {
     btns = splitList(buttons, 10);
+    const sendAllFileLink = `${botLink}?start=search-${chatId}-${msg.text
+      .replace(/ /g, "-")
+      .toLowerCase()}`;
+
     allButtons[keyword] = {
       total: btns.length,
       buttons: btns,
+      sendAllFileLink,
     };
 
     const data = [...allButtons[keyword].buttons[0]];
@@ -254,9 +258,7 @@ bot.on("message", async (msg) => {
     data.push([
       {
         text: "Send all files",
-        url: `${botLink}?start=search-${chatId}-${msg.text
-          .replace(/ /g, "-")
-          .toLowerCase()}`,
+        url: sendAllFileLink,
       },
     ]);
 
@@ -393,6 +395,13 @@ bot.on("callback_query", async (query) => {
           },
         ]);
 
+        buttons.push([
+          {
+            text: "Send all files",
+            url: data.sendAllFileLink,
+          },
+        ]);
+
         await bot.editMessageReplyMarkup(
           JSON.stringify({
             inline_keyboard: buttons,
@@ -423,6 +432,13 @@ bot.on("callback_query", async (query) => {
           {
             text: `📃 Pages ${parseInt(index) + 2}/${data.total}`,
             callback_data: `pages`,
+          },
+        ]);
+
+        buttons.push([
+          {
+            text: "Send all files",
+            url: data.sendAllFileLink,
           },
         ]);
 
@@ -461,6 +477,13 @@ bot.on("callback_query", async (query) => {
           },
         ]);
 
+        buttons.push([
+          {
+            text: "Send all files",
+            url: data.sendAllFileLink,
+          },
+        ]);
+
         await bot.editMessageReplyMarkup(
           JSON.stringify({
             inline_keyboard: buttons,
@@ -494,6 +517,13 @@ bot.on("callback_query", async (query) => {
           },
         ]);
 
+        buttons.push([
+          {
+            text: "Send all files",
+            url: data.sendAllFileLink,
+          },
+        ]);
+
         await bot.editMessageReplyMarkup(
           JSON.stringify({
             inline_keyboard: buttons,
@@ -517,16 +547,36 @@ bot.onText(/\/filterstats/, async (msg) => {
   if (msg.chat.type !== "group" && msg.chat.type !== "supergroup") {
     return;
   }
-
   const obj = await Group.findOne({ chatId });
-  if (!obj) return await bot.sendMessage(chatId, "No channels found");
+  if (!obj || Object.keys(obj.channels).length < 1)
+    return await bot.sendMessage(chatId, "No channels found");
 
   const channels = Object.keys(obj.channels);
   let message = "All channels added to this group are:\n";
 
   for (let index in channels) {
-    message += `${+index + 1}) ${channels[index]}\n`;
+    const data = await bot.getChat(channels[index]);
+    message += `${+index + 1}) ${data.title} (${data.id})\n`;
   }
 
   await bot.sendMessage(chatId, message);
+});
+
+bot.onText(/\/delall/, async (msg) => {
+  const chatId = msg.chat.id;
+  if (msg.chat.type !== "group" && msg.chat.type !== "supergroup") {
+    return;
+  }
+
+  const obj = await Group.findOne({ chatId });
+  if (!obj) return await bot.sendMessage(chatId, "No channels found");
+
+  const count = Object.keys(obj.channels).length;
+  obj.channels = {};
+  await obj.save();
+
+  await bot.sendMessage(
+    chatId,
+    `All channels deleted successfully [Total: ${count}]`
+  );
 });
