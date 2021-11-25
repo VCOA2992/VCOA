@@ -331,6 +331,7 @@ bot.onText(/\/start (.+)/, async (msg, match) => {
     const messageId = resp[2];
 
     try {
+      console.log(chatId, channel, messageId);
       await bot.copyMessage(chatId, channel, messageId);
     } catch (err) {
       await bot.sendMessage(
