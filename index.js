@@ -48,6 +48,7 @@ bot.onText(/\/add (.+)/, async (msg, match) => {
   }
 
   const resp = match[1];
+  console.log(match, resp);
 
   let obj = await Group.findOne({ chatId: chatId });
 
@@ -66,37 +67,49 @@ bot.onText(/\/add (.+)/, async (msg, match) => {
   console.log(`Adding ${resp} in ${chatId}`);
 
   let data = [];
-  for await (const message of client.iterMessages(parseInt(resp), {
-    limit: 100000000000,
-    filter: Api.InputMessagesFilterVideo,
-  })) {
-    data.push({
-      caption: message.message,
-      messageId: message.id,
-      fileSize: Math.trunc(message.media.document.size / 1024 / 1024),
-    });
-  }
-
-  for await (const message of client.iterMessages(parseInt(resp), {
-    limit: 100000000000,
-    filter: Api.InputMessagesFilterDocument,
-  })) {
-    data.push({
-      caption: message.message,
-      messageId: message.id,
-      fileSize: Math.trunc(message.media.document.size / 1024 / 1024),
-    });
-  }
-
-  obj.channels = { ...obj.channels, [resp]: data };
-
   try {
-    await obj.save();
-    await bot.sendMessage(chatId, "Added successfully");
-    console.log("Channel added successfully");
-  } catch (err) {
-    console.log(err);
-    await bot.sendMessage(chatId, `Error while adding channel\n${err.message}`);
+    await client.getDialogs({ limit: 50 });
+    for await (const message of client.iterMessages(parseInt(resp), {
+      limit: 100000000000,
+      filter: Api.InputMessagesFilterVideo,
+    })) {
+      data.push({
+        caption: message.message,
+        messageId: message.id,
+        fileSize: Math.trunc(message.media.document.size / 1024 / 1024),
+      });
+    }
+
+    for await (const message of client.iterMessages(parseInt(resp), {
+      limit: 100000000000,
+      filter: Api.InputMessagesFilterDocument,
+    })) {
+      data.push({
+        caption: message.message,
+        messageId: message.id,
+        fileSize: Math.trunc(message.media.document.size / 1024 / 1024),
+      });
+    }
+
+    obj.channels = { ...obj.channels, [resp]: data };
+
+    try {
+      await obj.save();
+      await bot.sendMessage(chatId, "Added successfully");
+      console.log("Channel added successfully");
+    } catch (err) {
+      console.log(err);
+      await bot.sendMessage(
+        chatId,
+        `Error while adding channel\n${err.message}`
+      );
+    }
+  } catch (error) {
+    console.log(error);
+    await bot.sendMessage(
+      chatId,
+      `Error occured while adding channel\n${error.message}`
+    );
   }
 });
 
@@ -497,4 +510,23 @@ bot.on("callback_query", async (query) => {
       await bot.answerCallbackQuery(query.id);
     }
   }
+});
+
+bot.onText(/\/filterstats/, async (msg) => {
+  const chatId = msg.chat.id;
+  if (msg.chat.type !== "group" && msg.chat.type !== "supergroup") {
+    return;
+  }
+
+  const obj = await Group.findOne({ chatId });
+  if (!obj) return await bot.sendMessage(chatId, "No channels found");
+
+  const channels = Object.keys(obj.channels);
+  let message = "All channels added to this group are:\n";
+
+  for (let index in channels) {
+    message += `${+index + 1}) ${channels[index]}\n`;
+  }
+
+  await bot.sendMessage(chatId, message);
 });
