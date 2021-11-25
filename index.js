@@ -580,3 +580,31 @@ bot.onText(/\/delall/, async (msg) => {
     `All channels deleted successfully [Total: ${count}]`
   );
 });
+
+bot.on("channel_post", async (msg) => {
+  const chatId = msg.chat.id;
+
+  if (!msg.video && !msg.document) {
+    return;
+  }
+  const groups = await Group.where(`channels.${chatId}`).exists();
+
+  for (const group of groups) {
+    const obj = await Group.findOne({ chatId: group.chatId });
+    const media = msg.document || msg.video;
+
+    obj.channels = {
+      ...obj.channels,
+      [chatId]: [
+        ...obj.channels[chatId],
+        {
+          caption: msg.caption,
+          messageId: msg.message_id,
+          fileSize: Math.trunc(media.file_size / 1024 / 1024),
+        },
+      ],
+    };
+
+    await obj.save();
+  }
+});
