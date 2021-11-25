@@ -2,9 +2,7 @@ const connectDB = require("./config/db");
 const Fuse = require("fuse.js");
 const config = require("./config");
 
-const authorized_users = process.env.AUTHORIZED_USERS?.split(" ") || [
-  config.AUTHORIZED_USERS,
-];
+const authorized_users = config.AUTHORIZED_USERS;
 
 const bot = require("./bot");
 
@@ -29,6 +27,8 @@ let allButtons = {};
   });
   await client.start();
 })();
+
+console.log("Bot is now ready");
 
 // Add channel in group
 bot.onText(/\/add (.+)/, async (msg, match) => {
@@ -63,6 +63,8 @@ bot.onText(/\/add (.+)/, async (msg, match) => {
   }
 
   await bot.sendMessage(chatId, "Adding channel");
+  console.log(`Adding ${resp} in ${chatId}`);
+
   let data = [];
   for await (const message of client.iterMessages(parseInt(resp), {
     limit: 100000000000,
@@ -91,8 +93,10 @@ bot.onText(/\/add (.+)/, async (msg, match) => {
   try {
     await obj.save();
     await bot.sendMessage(chatId, "Added successfully");
+    console.log("Channel added successfully");
   } catch (err) {
     console.log(err);
+    await bot.sendMessage(chatId, `Error while adding channel\n${err.message}`);
   }
 });
 
@@ -166,8 +170,10 @@ bot.on("message", async (msg) => {
   }
 
   const obj = await Group.findOne({ chatId });
+  if (!obj) return;
 
   let data = [];
+
   for (let i in obj.channels) {
     for (let j of obj.channels[i]) {
       data.push({
@@ -331,7 +337,6 @@ bot.onText(/\/start (.+)/, async (msg, match) => {
     const messageId = resp[2];
 
     try {
-      console.log(chatId, channel, messageId);
       await bot.copyMessage(chatId, channel, messageId);
     } catch (err) {
       await bot.sendMessage(
