@@ -548,6 +548,7 @@ bot.onText(/\/filterstats/, async (msg) => {
     return;
   }
   const obj = await Group.findOne({ chatId });
+
   if (!obj || Object.keys(obj.channels).length < 1)
     return await bot.sendMessage(chatId, "No channels found");
 
@@ -555,8 +556,13 @@ bot.onText(/\/filterstats/, async (msg) => {
   let message = "All channels added to this group are:\n";
 
   for (let index in channels) {
-    const data = await bot.getChat(channels[index]);
-    message += `${+index + 1}) ${data.title} (${data.id})\n`;
+    try {
+      const data = await bot.getChat(channels[index]);
+      message += `${+index + 1}) ${data.title} (${data.id})\n`;
+    } catch (err) {
+      console.log(err);
+      message += `${+index + 1}) ${channels[index]}\n`;
+    }
   }
 
   await bot.sendMessage(chatId, message);
@@ -567,7 +573,7 @@ bot.onText(/\/delall/, async (msg) => {
   if (msg.chat.type !== "group" && msg.chat.type !== "supergroup") {
     return;
   }
-  
+
   if (!authorized_users.includes(String(msg.from.id))) {
     return bot.sendMessage(
       chatId,
@@ -590,16 +596,13 @@ bot.onText(/\/delall/, async (msg) => {
 
 bot.on("channel_post", async (msg) => {
   const chatId = msg.chat.id;
-
   if (!msg.video && !msg.document) {
     return;
   }
   const groups = await Group.where(`channels.${chatId}`).exists();
-
   for (const group of groups) {
     const obj = await Group.findOne({ chatId: group.chatId });
     const media = msg.document || msg.video;
-
     obj.channels = {
       ...obj.channels,
       [chatId]: [
@@ -611,7 +614,6 @@ bot.on("channel_post", async (msg) => {
         },
       ],
     };
-
     await obj.save();
   }
 });
