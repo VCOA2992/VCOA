@@ -567,6 +567,13 @@ bot.onText(/\/delall/, async (msg) => {
   if (msg.chat.type !== "group" && msg.chat.type !== "supergroup") {
     return;
   }
+  
+  if (!authorized_users.includes(String(msg.from.id))) {
+    return bot.sendMessage(
+      chatId,
+      "Sorry but you are not authorized to use this bot"
+    );
+  }
 
   const obj = await Group.findOne({ chatId });
   if (!obj) return await bot.sendMessage(chatId, "No channels found");
