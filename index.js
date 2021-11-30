@@ -180,7 +180,6 @@ bot.on("message", async (msg) => {
   if (msg.length < 3) {
     return;
   }
-console.log("RUNNING")
   const obj = await Group.findOne({ chatId });
   if (!obj) return;
     
