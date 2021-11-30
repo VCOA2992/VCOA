@@ -168,6 +168,7 @@ const splitList = (list, index) => {
 
 // Search for movie and send in group
 bot.on("message", async (msg) => {
+  console.log("RUNNING")
   if (!msg.text) {
     return;
   }
