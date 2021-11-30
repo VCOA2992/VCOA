@@ -183,7 +183,7 @@ bot.on("message", async (msg) => {
 
   const obj = await Group.findOne({ chatId });
   if (!obj) return;
-
+    console.log("RUNNING")
   let data = [];
 
   for (let i in obj.channels) {
@@ -196,8 +196,6 @@ bot.on("message", async (msg) => {
       });
     }
   }
-  console.log(data)
-    console.log("RUNNING")
   
 
   const opt = {
