@@ -168,7 +168,6 @@ const splitList = (list, index) => {
 
 // Search for movie and send in group
 bot.on("message", async (msg) => {
-  console.log("RUNNING")
   if (!msg.text) {
     return;
   }
@@ -197,6 +196,9 @@ bot.on("message", async (msg) => {
       });
     }
   }
+  console.log(data)
+    console.log("RUNNING")
+  
 
   const opt = {
     keys: ["caption"],
