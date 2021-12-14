@@ -4,6 +4,7 @@ const generateInlineKeyboards = require("../../helper/generateInlineKeyboards");
 
 module.exports = async (query) => {
   await bot.answerCallbackQuery(query.id);
+  console.log("HI")
 
   if (query.data.startsWith("pages")) return;
 
