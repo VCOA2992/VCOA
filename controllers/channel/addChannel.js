@@ -48,7 +48,7 @@ module.exports = async (message, [, channelId]) => {
       Api.InputMessagesFilterDocument,
     ];
 
-    let fileCount = 0;
+    const files = [];
 
     for (const fileType of fileTypes) {
       for await (const { message, id, media } of client.iterMessages(
@@ -58,23 +58,23 @@ module.exports = async (message, [, channelId]) => {
           filter: fileType,
         }
       )) {
-        await new File({
+        files.push({
           _id: id,
           caption: message,
           fileSize: Math.trunc(media.document.size / 1024 / 1024),
-        }).save();
-        fileCount++;
+        });
       }
     }
 
     await client.disconnect();
 
+    await File.insertMany(files);
     group.channels.push(channelId);
 
     await group.save();
 
     await bot.editMessageText(
-      `Channel Added Successfully\nTotal Files: ${fileCount}`,
+      `Channel Added Successfully\nTotal Files: ${files.length}`,
       {
         chat_id: chatId,
         message_id: messageId,
@@ -84,3 +84,4 @@ module.exports = async (message, [, channelId]) => {
     console.log(err);
   }
 };
+

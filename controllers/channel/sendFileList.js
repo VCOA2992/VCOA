@@ -32,7 +32,7 @@ module.exports = async (message) => {
     };
 
     if (message.reply_to_message) {
-      options.reply_to_message_id = msg.reply_to_message.message_id;
+      options.reply_to_message_id = message.reply_to_message.message_id;
     }
 
     await bot.sendMessage(chatId, "Here are list of files", options);
@@ -40,3 +40,4 @@ module.exports = async (message) => {
     console.log(error);
   }
 };
+
