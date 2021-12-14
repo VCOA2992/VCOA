@@ -1,5 +1,9 @@
+/*
+ * All steps related to connecting to database
+ */
+
 const mongoose = require("mongoose");
-const config = require("../config");
+const config = require("./config");
 
 const db = config.MONGODB_URI;
 
