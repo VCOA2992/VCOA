@@ -61,6 +61,7 @@ module.exports.generateButtons = async (data, query, messageId, chatId) => {
   let keyword = `${chatId}-${messageId}`;
   const sendAllFileLink = `${botLink}?start=search-${chatId}-${query
     .replace(/ /g, "-")
+    .replace(/[\(\)]/g, "")
     .toLowerCase()}`;
 
   if (buttons.length > 10) {
