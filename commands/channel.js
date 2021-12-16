@@ -12,6 +12,7 @@ import sendFileList from "../controllers/channel/sendFileList.js";
 import sendFiles from "../controllers/channel/sendFiles.js";
 import addChannelFile from "../controllers/channel/addChannelFile.js";
 import editChannelFileCaption from "../controllers/channel/editChannelFileCaption.js";
+import checkCaption from "../controllers/channel/checkCaption.js";
 
 /*
  * @command  /add <channel-id>^
@@ -47,6 +48,13 @@ bot.onText(/^\/filterstats/, filterStats);
  * @access   All Users
  */
 bot.onText(/\/start (.+)/, sendFiles);
+
+/*
+ * @command  /checkcap <channel-id>
+ * @desc     Shows list of files whose caption is empty
+ * @access   Authorized Users
+ */
+bot.onText(/\/checkcap (.+)/, checkCaption);
 
 /*
  * @desc     Adds a file when a file is posted to the channel

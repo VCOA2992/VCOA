@@ -8,7 +8,9 @@ import logMessage from "../../helper/logMessage.js";
 
 export default async (message) => {
   const chatId = message.chat.id;
-  const { caption, message_id: id } = message;
+  let { caption, message_id: id } = message;
+
+  if (!caption) caption = "";
 
   try {
     const media = message.document || message.video;
