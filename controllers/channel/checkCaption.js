@@ -30,11 +30,11 @@ export default async (message, match) => {
 
     await bot.sendMessage(
       chatId,
-      "I am now sending all files without caption..."
+      `I am now sending all files without caption...\nTotal Files: ${filesWithEmptyCaption.length}`
     );
 
     for (const file of filesWithEmptyCaption) {
-      if (files.length > 20) {
+      if (files.length > 30) {
         await bot.sendMessage(chatId, files.join("\n"));
         files = [];
       }
