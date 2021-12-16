@@ -4,6 +4,7 @@
 
 import createFile from "../../models/createFile.js";
 import doesCollectionExist from "../../helper/doesCollectionExist.js";
+import logMessage from "../../helper/logMessage.js";
 
 export default async (message) => {
   const chatId = message.chat.id;
@@ -24,6 +25,6 @@ export default async (message) => {
       fileSize: Math.trunc(media.file_size / 1024 / 1024),
     }).save();
   } catch (error) {
-    console.log(error);
+    logMessage(error.message, error);
   }
 };

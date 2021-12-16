@@ -7,6 +7,7 @@
 import { searchFiles } from "../../helper/searchFiles.js";
 import Group from "../../models/Group.js";
 import bot from "../../bot.js";
+import logMessage from "../../helper/logMessage.js";
 
 export default async (message, match) => {
   const chatId = message.chat.id;
@@ -37,6 +38,6 @@ export default async (message, match) => {
   } catch (error) {
     await bot.sendMessage(chatId, `Be sure I am added to all the channels`);
 
-    console.log(error);
+    logMessage(error.message, error);
   }
 };

@@ -8,6 +8,7 @@ import messageAuth from "../../helper/messageAuth.js";
 import bot from "../../bot.js";
 import Group from "../../models/Group.js";
 import deleteChannel from "../../helper/deleteChannel.js";
+import logMessage from "../../helper/logMessage.js";
 
 export default async (message) => {
   const chatId = message.chat.id;
@@ -34,7 +35,7 @@ export default async (message) => {
       chat_id: chatId,
       message_id: messageId,
     });
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    logMessage(error.message, error);
   }
 };

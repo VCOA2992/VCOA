@@ -7,6 +7,7 @@ import messageAuth from "../../helper/messageAuth.js";
 import { generateButtons, searchFiles } from "../../helper/searchFiles.js";
 import Group from "../../models/Group.js";
 import bot from "../../bot.js";
+import logMessage from "../../helper/logMessage.js";
 
 export default async (message) => {
   if (message.text.length < 3) return;
@@ -37,6 +38,6 @@ export default async (message) => {
 
     await bot.sendMessage(chatId, "Here are list of files", options);
   } catch (error) {
-    console.log(error);
+    logMessage(error.message, error);
   }
 };

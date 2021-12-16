@@ -5,6 +5,7 @@
  */
 
 import bot from "../../bot.js";
+import logMessage from "../../helper/logMessage.js";
 import messageAuth from "../../helper/messageAuth.js";
 import Group from "../../models/Group.js";
 
@@ -26,14 +27,14 @@ export default async (message) => {
       try {
         const data = await bot.getChat(channels[index]);
         message += `${+index + 1}) ${data.title} (${data.id})\n`;
-      } catch (err) {
-        console.log(err);
+      } catch (error) {
+        logMessage(error.message, error);
         message += `${+index + 1}) ${channels[index]}\n`;
       }
     }
 
     await bot.sendMessage(chatId, message);
   } catch (error) {
-    console.log(error);
+    logMessage(error.message, error);
   }
 };

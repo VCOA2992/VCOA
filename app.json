@@ -28,6 +28,11 @@
     "MONGODB_URI": {
       "description": "Database URL from https://cloud.mongodb.com/",
       "value": ""
+    },
+    "LOG_CHANNEL": {
+      "description": "Channel ID where you want to log error messages",
+      "required": false,
+      "value": ""
     }
   },
   "buildpacks": [

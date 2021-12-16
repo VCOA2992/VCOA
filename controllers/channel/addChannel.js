@@ -10,6 +10,7 @@ import createFile from "../../models/createFile.js";
 import bot from "../../bot.js";
 import client from "../../client.js";
 import { Api } from "telegram";
+import logMessage from "../../helper/logMessage.js";
 
 export default async (message, [, channelId]) => {
   const chatId = message.chat.id;
@@ -32,7 +33,7 @@ export default async (message, [, channelId]) => {
     }
 
     const addingMessage = `Adding ${channelId} in ${chatId}`;
-    console.log(addingMessage);
+    logMessage(addingMessage);
     const { message_id: messageId } = await bot.sendMessage(
       chatId,
       addingMessage
@@ -57,8 +58,9 @@ export default async (message, [, channelId]) => {
         filter: fileType,
       })) {
         if (message.restrictionReason) {
-          console.log(
-            `${message.id} of ${channelId} has been skipped due to restriction\n${message.restrictionReason.reason}`
+          logMessage(
+            `${message.id} of ${channelId} has been skipped due to restriction`,
+            message.restrictionReason.reason
           );
           continue;
         }
@@ -79,12 +81,16 @@ export default async (message, [, channelId]) => {
     await group.save();
 
     const addingFinished = `Channel Added Successfully\nTotal Files: ${files.length}`;
-    console.log(addingFinished);
+    logMessage(addingFinished);
     await bot.editMessageText(addingFinished, {
       chat_id: chatId,
       message_id: messageId,
     });
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    await bot.sendMessage(
+      chatId,
+      "Error Occured while adding channel, Please check logs for more info"
+    );
+    logMessage(error.message, error);
   }
 };

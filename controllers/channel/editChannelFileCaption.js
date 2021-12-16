@@ -3,6 +3,7 @@
  */
 
 import doesCollectionExist from "../../helper/doesCollectionExist.js";
+import logMessage from "../../helper/logMessage.js";
 import createFile from "../../models/createFile.js";
 
 export default async (message) => {
@@ -18,6 +19,6 @@ export default async (message) => {
       caption: message.caption,
     });
   } catch (error) {
-    console.log(error);
+    logMessage(error.message, error);
   }
 };
