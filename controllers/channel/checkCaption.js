@@ -22,7 +22,8 @@ export default async (message, match) => {
     const File = createFile(channelId);
     const filesWithEmptyCaption = await File.find({ caption: "" });
 
-    if (filesWithEmptyCaption.length === 0) return;
+    if (filesWithEmptyCaption.length === 0)
+      return bot.sendMessage(chatId, "No files with empty caption found");
 
     let message = "All the files without caption are:\n\n";
     await client.connect();
