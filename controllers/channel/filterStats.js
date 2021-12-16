@@ -4,11 +4,11 @@
  * @access   Authorized Users
  */
 
-const bot = require("../../bot");
-const messageAuth = require("../../helper/messageAuth");
-const Group = require("../../models/Group");
+import bot from "../../bot.js";
+import messageAuth from "../../helper/messageAuth.js";
+import Group from "../../models/Group.js";
 
-module.exports = async (message) => {
+export default async (message) => {
   const chatId = message.chat.id;
 
   messageAuth(message, { authUser: true });

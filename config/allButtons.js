@@ -1,1 +1,1 @@
-module.exports = allButtons = {};
+export default {};

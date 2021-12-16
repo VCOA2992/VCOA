@@ -2,10 +2,10 @@
  * @desc     Edits caption when caption of a file is updated
  */
 
-const doesCollectionExist = require("../../helper/doesCollectionExist");
-const createFile = require("../../models/createFile");
+import doesCollectionExist from "../../helper/doesCollectionExist.js";
+import createFile from "../../models/createFile.js";
 
-module.exports = async (message) => {
+export default async (message) => {
   const chatId = message.chat.id;
 
   try {

@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
-const Group = require("../models/Group");
+import mongoose from "mongoose";
+import Group from "../models/Group.js";
 
-module.exports = async (chatId, channelId) => {
+export default async (chatId, channelId) => {
   await mongoose.connection.db.dropCollection(channelId);
   await Group.findOneAndUpdate(chatId, { $pull: { channels: channelId } });
 };

@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-module.exports = async (collectionName) => {
+export default async (collectionName) => {
   const collections = await mongoose.connection.db.listCollections().toArray();
 
   const collectionExist =

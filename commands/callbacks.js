@@ -2,10 +2,11 @@
  * All callbacks that bot will listen to
  */
 
-const bot = require("../bot");
-const config = require("../config/config");
+import bot from "../bot.js";
+import { AUTHORIZED_USERS } from "../config/config.js";
+import pagination from "../controllers/callbacks/pagination.js";
 
-const authorized_users = config.AUTHORIZED_USERS;
+const authorized_users = AUTHORIZED_USERS;
 
 bot.on("callback_query", async (query) => {
   const userWhoClicked = query.from.id;
@@ -15,5 +16,5 @@ bot.on("callback_query", async (query) => {
     userWhoClicked === userWhoRequested ||
     authorized_users.includes(userWhoClicked)
   )
-    require("../controllers/callbacks/pagination")(query);
+    pagination(query);
 });

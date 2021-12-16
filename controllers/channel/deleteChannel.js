@@ -4,13 +4,12 @@
  * @access   Authorized Users
  */
 
-const messageAuth = require("../../helper/messageAuth");
-const bot = require("../../bot");
-const mongoose = require("mongoose");
-const Group = require("../../models/Group");
-const deleteChannel = require("../../helper/deleteChannel");
+import messageAuth from "../../helper/messageAuth.js";
+import bot from "../../bot.js";
+import Group from "../../models/Group.js";
+import deleteChannel from "../../helper/deleteChannel.js";
 
-module.exports = async (message, [, channelId]) => {
+export default async (message, [, channelId]) => {
   const chatId = message.chat.id;
 
   messageAuth(message, { authUser: true });

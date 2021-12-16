@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const createFile = (collectionName) => {
   const fileSchema = new mongoose.Schema(
@@ -17,4 +17,4 @@ const createFile = (collectionName) => {
   }
 };
 
-module.exports = createFile;
+export default createFile;

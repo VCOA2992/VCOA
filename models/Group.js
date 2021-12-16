@@ -1,8 +1,8 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-const groupSchema = mongoose.Schema({
+const groupSchema = new mongoose.Schema({
   chatId: { type: String, maxlength: 50, required: true },
   channels: [],
 });
 
-module.exports = mongoose.model("Group", groupSchema);
+export default mongoose.model("Group", groupSchema);

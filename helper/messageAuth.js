@@ -1,9 +1,7 @@
-const bot = require("../bot");
-const config = require("../config/config");
+import bot from "../bot.js";
+import { AUTHORIZED_USERS } from "../config/config.js";
 
-const authorized_users = config.AUTHORIZED_USERS;
-
-module.exports = async (message, options) => {
+export default async (message, options) => {
   const chatId = message.chat.id;
 
   if (message.chat.type !== "group" && message.chat.type !== "supergroup")
@@ -15,7 +13,7 @@ module.exports = async (message, options) => {
       );
 
   if (options && options.authUser) {
-    if (!authorized_users.includes(String(message.from.id)))
+    if (!AUTHORIZED_USERS.includes(String(message.from.id)))
       await bot.sendMessage(
         chatId,
         "Sorry but you are not authorized to use this bot"

@@ -2,58 +2,64 @@
  * All commands related to telegram channels
  */
 
-const bot = require("../bot");
+import bot from "../bot.js";
+
+import addChannel from "../controllers/channel/addChannel.js";
+import deleteChannel from "../controllers/channel/deleteChannel.js";
+import deleteAllChannels from "../controllers/channel/deleteAllChannels.js";
+import filterStats from "../controllers/channel/filterStats.js";
+import sendFileList from "../controllers/channel/sendFileList.js";
+import sendFiles from "../controllers/channel/sendFiles.js";
+import addChannelFile from "../controllers/channel/addChannelFile.js";
+import editChannelFileCaption from "../controllers/channel/editChannelFileCaption.js";
 
 /*
  * @command  /add <channel-id>^
  * @desc     Command to add channel content
  * @access   Authorized Users
  */
-bot.onText(/^\/add (.+)/, require("../controllers/channel/addChannel"));
+bot.onText(/^\/add (.+)/, addChannel);
 
 /*
  * @command  /del <channel-id>
  * @desc     Command to delete channel content
  * @access   Authorized Users
  */
-bot.onText(/^\/del (.+)/, require("../controllers/channel/deleteChannel"));
+bot.onText(/^\/del (.+)/, deleteChannel);
 
 /*
  * @command  /delall
  * @desc     Danger: Delete all channels in group
  * @access   Authorized Users
  */
-bot.onText(/^\/delall/, require("../controllers/channel/deleteAllChannels"));
+bot.onText(/^\/delall/, deleteAllChannels);
 
 /*
  * @command  /filterstats
  * @desc     Shows list of all connected channels
  * @access   Authorized Users
  */
-bot.onText(/^\/filterstats/, require("../controllers/channel/filterStats"));
-
-/*
- * @desc     Sends files according to the query of user
- * @access   All Users
- */
-bot.on("text", require("../controllers/channel/sendFileList"));
+bot.onText(/^\/filterstats/, filterStats);
 
 /*
  * @command  /start [search <group-id>-<query>, <channel-id>-<message-id>]
  * @desc     Send filtered files to user
  * @access   All Users
  */
-bot.onText(/\/start (.+)/, require("../controllers/channel/sendFiles"));
+bot.onText(/\/start (.+)/, sendFiles);
 
 /*
  * @desc     Adds a file when a file is posted to the channel
  */
-bot.on("channel_post", require("../controllers/channel/addChannelFile"));
+bot.on("channel_post", addChannelFile);
 
 /*
  * @desc     Edits caption when caption of a file is updated
  */
-bot.on(
-  "edited_channel_post_caption",
-  require("../controllers/channel/editChannelFileCaption")
-);
+bot.on("edited_channel_post_caption", editChannelFileCaption);
+
+/*
+ * @desc     Sends files according to the query of user
+ * @access   All Users
+ */
+bot.on("text", sendFileList);

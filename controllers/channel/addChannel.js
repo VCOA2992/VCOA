@@ -4,14 +4,14 @@
  * @access   Authorized Users
  */
 
-const messageAuth = require("../../helper/messageAuth");
-const Group = require("../../models/Group");
-const createFile = require("../../models/createFile");
-const bot = require("../../bot");
-const client = require("../../client");
-const { Api } = require("telegram");
+import messageAuth from "../../helper/messageAuth.js";
+import Group from "../../models/Group.js";
+import createFile from "../../models/createFile.js";
+import bot from "../../bot.js";
+import client from "../../client.js";
+import { Api } from "telegram";
 
-module.exports = async (message, [, channelId]) => {
+export default async (message, [, channelId]) => {
   const chatId = message.chat.id;
 
   messageAuth(message, { authUser: true });
@@ -32,6 +32,7 @@ module.exports = async (message, [, channelId]) => {
     }
 
     const addingMessage = `Adding ${channelId} in ${chatId}`;
+    console.log(addingMessage);
     const { message_id: messageId } = await bot.sendMessage(
       chatId,
       addingMessage
@@ -51,17 +52,21 @@ module.exports = async (message, [, channelId]) => {
     const files = [];
 
     for (const fileType of fileTypes) {
-      for await (const { message, id, media } of client.iterMessages(
-        parseInt(channelId),
-        {
-          limit: 10000000,
-          filter: fileType,
+      for await (const message of client.iterMessages(parseInt(channelId), {
+        limit: 10000000,
+        filter: fileType,
+      })) {
+        if (message.restrictionReason) {
+          console.log(
+            `${message.id} of ${channelId} has been skipped due to restriction\n${message.restrictionReason.reason}`
+          );
+          continue;
         }
-      )) {
+
         files.push({
-          _id: id,
-          caption: message,
-          fileSize: Math.trunc(media.document.size / 1024 / 1024),
+          _id: message.id,
+          caption: message.message,
+          fileSize: Math.trunc(message.media.document.size / 1024 / 1024),
         });
       }
     }
@@ -73,15 +78,13 @@ module.exports = async (message, [, channelId]) => {
 
     await group.save();
 
-    await bot.editMessageText(
-      `Channel Added Successfully\nTotal Files: ${files.length}`,
-      {
-        chat_id: chatId,
-        message_id: messageId,
-      }
-    );
+    const addingFinished = `Channel Added Successfully\nTotal Files: ${files.length}`;
+    console.log(addingFinished);
+    await bot.editMessageText(addingFinished, {
+      chat_id: chatId,
+      message_id: messageId,
+    });
   } catch (err) {
     console.log(err);
   }
 };
-

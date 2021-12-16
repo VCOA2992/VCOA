@@ -2,14 +2,14 @@
  * Client object to do all stuffs that bot can't do
  */
 
-const config = require("./config/config");
-const { Logger } = require("telegram/extensions");
-const { TelegramClient } = require("telegram");
-const { StringSession } = require("telegram/sessions");
+import { APP_ID, API_HASH, STRING_SESSION } from "./config/config.js";
+import { Logger } from "telegram/extensions/index.js";
+import { TelegramClient } from "telegram";
+import { StringSession } from "telegram/sessions/index.js";
 
-const appId = config.APP_ID;
-const apiHash = config.API_HASH;
-const stringSession = new StringSession(config.STRING_SESSION);
+const appId = APP_ID;
+const apiHash = API_HASH;
+const stringSession = new StringSession(STRING_SESSION);
 
 Logger.setLevel("none");
 
@@ -21,4 +21,4 @@ let client;
   });
 })();
 
-module.exports = client;
+export default client;

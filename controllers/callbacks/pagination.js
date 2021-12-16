@@ -1,10 +1,9 @@
-const bot = require("../../bot");
-const allButtons = require("../../config/allButtons");
-const generateInlineKeyboards = require("../../helper/generateInlineKeyboards");
+import bot from "../../bot.js";
+import allButtons from "../../config/allButtons.js";
+import generateInlineKeyboards from "../../helper/generateInlineKeyboards.js";
 
-module.exports = async (query) => {
+export default async (query) => {
   await bot.answerCallbackQuery(query.id);
-  console.log("HI")
 
   if (query.data.startsWith("pages")) return;
 

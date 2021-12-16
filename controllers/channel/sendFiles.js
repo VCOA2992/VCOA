@@ -4,11 +4,11 @@
  * @access   All Users
  */
 
-const { searchFiles } = require("../../helper/searchFiles");
-const Group = require("../../models/Group");
-const bot = require("../../bot");
+import { searchFiles } from "../../helper/searchFiles.js";
+import Group from "../../models/Group.js";
+import bot from "../../bot.js";
 
-module.exports = async (message, match) => {
+export default async (message, match) => {
   const chatId = message.chat.id;
   const response = match[1].split("-");
 

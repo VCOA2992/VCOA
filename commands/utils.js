@@ -1,7 +1,7 @@
 /* 
     
 */
-const bot = require("../bot");
+import bot from "../bot.js";
 
 /*
  * @desc     Log all related errors

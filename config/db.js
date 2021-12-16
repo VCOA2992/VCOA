@@ -2,14 +2,12 @@
  * All steps related to connecting to database
  */
 
-const mongoose = require("mongoose");
-const config = require("./config");
-
-const db = config.MONGODB_URI;
+import mongoose from "mongoose";
+import { MONGODB_URI } from "./config.js";
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(db, {
+    await mongoose.connect(MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
@@ -22,4 +20,4 @@ const connectDB = async () => {
   }
 };
 
-module.exports = connectDB;
+export default connectDB;

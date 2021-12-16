@@ -1,4 +1,4 @@
-module.exports = (data, options) => {
+export default (data, options) => {
   const buttons = [...data];
 
   const navigationButtons = [];

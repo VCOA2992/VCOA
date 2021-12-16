@@ -2,11 +2,7 @@
  * Bot object to do all actions related to bot
  */
 
-const TelegramBot = require("node-telegram-bot-api");
-const config = require("./config/config");
+import TelegramBot from "node-telegram-bot-api";
+import { BOT_TOKEN } from "./config/config.js";
 
-const token = config.BOT_TOKEN;
-
-const bot = new TelegramBot(token, { polling: true });
-
-module.exports = bot;
+export default new TelegramBot(BOT_TOKEN, { polling: true });

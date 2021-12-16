@@ -1,9 +1,9 @@
-const connectDB = require("./config/db");
+import connectDB from "./config/db.js";
 
 // Connect Databases
 connectDB();
 
 // Commands
-require("./commands/channel");
-require("./commands/utils");
-require("./commands/callbacks");
+import "./commands/channel.js";
+import "./commands/utils.js";
+import "./commands/callbacks.js";

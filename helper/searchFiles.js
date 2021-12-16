@@ -1,8 +1,8 @@
-const createFile = require("../models/createFile");
-const Fuse = require("fuse.js");
-const bot = require("../bot");
-const allButtons = require("../config/allButtons");
-const generateInlineKeyboards = require("./generateInlineKeyboards");
+import createFile from "../models/createFile.js";
+import Fuse from "fuse.js";
+import bot from "../bot.js";
+import allButtons from "../config/allButtons.js";
+import generateInlineKeyboards from "./generateInlineKeyboards.js";
 
 const allMovies = async (channels) => {
   let data = [];
@@ -11,12 +11,12 @@ const allMovies = async (channels) => {
     const File = createFile(channelId);
     const files = await File.find({});
 
-    for await ({ caption, _id: messageId, fileSize } of files) {
+    for await (const file of files) {
       data.push({
         fromId: channelId,
-        caption,
-        messageId,
-        fileSize,
+        caption: file.caption,
+        messageId: file._id,
+        fileSize: file.fileSize,
       });
     }
   }
@@ -43,7 +43,7 @@ const splitList = (list, index) => {
   return result;
 };
 
-module.exports.generateButtons = async (data, query, messageId, chatId) => {
+export async function generateButtons(data, query, messageId, chatId) {
   let buttons = [];
 
   const me = await bot.getMe();
@@ -89,11 +89,11 @@ module.exports.generateButtons = async (data, query, messageId, chatId) => {
   } else {
     return generateInlineKeyboards(buttons, { sendAllFileLink });
   }
-};
+}
 
-module.exports.searchFiles = async (query, channels) => {
+export async function searchFiles(query, channels) {
   let data = await allMovies(channels);
   let filteredData = searchFromMovies(query, data);
 
   return filteredData;
-};
+}

@@ -2,11 +2,10 @@
  * @desc     Adds a file when a file is posted to the channel
  */
 
-const mongoose = require("mongoose");
-const createFile = require("../../models/createFile");
-const doesCollectionExist = require("../../helper/doesCollectionExist");
+import createFile from "../../models/createFile.js";
+import doesCollectionExist from "../../helper/doesCollectionExist.js";
 
-module.exports = async (message) => {
+export default async (message) => {
   const chatId = message.chat.id;
   const { caption, message_id: id } = message;
 

@@ -3,12 +3,12 @@
  * @access   All Users
  */
 
-const messageAuth = require("../../helper/messageAuth");
-const { generateButtons, searchFiles } = require("../../helper/searchFiles");
-const Group = require("../../models/Group");
-const bot = require("../../bot");
+import messageAuth from "../../helper/messageAuth.js";
+import { generateButtons, searchFiles } from "../../helper/searchFiles.js";
+import Group from "../../models/Group.js";
+import bot from "../../bot.js";
 
-module.exports = async (message) => {
+export default async (message) => {
   if (message.text.length < 3) return;
 
   const chatId = message.chat.id;
@@ -40,4 +40,3 @@ module.exports = async (message) => {
     console.log(error);
   }
 };
-
