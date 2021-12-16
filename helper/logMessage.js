@@ -11,7 +11,7 @@ export default async (message, options) => {
   if (LOG_CHANNEL) {
     let messageToBeSent = `${message}`;
 
-    if (error) messageToBeSent += `\n\n\`${error}\``;
+    if (error) messageToBeSent += `\n\n\`${error.stack}\``;
 
     if (errorSource) {
       const date = new Date(errorSource.date * 1000);
