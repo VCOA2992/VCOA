@@ -25,10 +25,19 @@ export default async (message, match) => {
     if (filesWithEmptyCaption.length === 0)
       return bot.sendMessage(chatId, "No files with empty caption found");
 
-    let message = "All the files without caption are:\n\n";
+    let files = [];
     await client.connect();
 
+    await bot.sendMessage(
+      chatId,
+      "I am now sending all files without caption..."
+    );
+
     for (const file of filesWithEmptyCaption) {
+      if (files.length > 20) {
+        await bot.sendMessage(chatId, files.join("\n"));
+        files = [];
+      }
       const result = await client.invoke(
         new Api.channels.ExportMessageLink({
           channel: parseInt(channelId),
@@ -36,10 +45,12 @@ export default async (message, match) => {
           thread: true,
         })
       );
-      message += result.link + "\n";
+
+      files.push(result.link);
     }
 
-    await bot.sendMessage(chatId, message);
+    await bot.sendMessage(chatId, files.join("\n"));
+    await bot.sendMessage(chatId, "Done!");
   } catch (error) {
     logMessage(error.message, message);
   }
