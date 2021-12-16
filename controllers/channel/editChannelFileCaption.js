@@ -19,6 +19,6 @@ export default async (message) => {
       caption: message.caption,
     });
   } catch (error) {
-    logMessage(error.message, error);
+    logMessage(error.message, { error, errorSource: message });
   }
 };

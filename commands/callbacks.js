@@ -2,7 +2,7 @@
  * All callbacks that bot will listen to
  */
 
-import bot from "../bot.js";
+import bot from "../config/bot.js";
 import { AUTHORIZED_USERS } from "../config/config.js";
 import pagination from "../controllers/callbacks/pagination.js";
 

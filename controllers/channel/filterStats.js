@@ -4,7 +4,7 @@
  * @access   Authorized Users
  */
 
-import bot from "../../bot.js";
+import bot from "../../config/bot.js";
 import logMessage from "../../helper/logMessage.js";
 import messageAuth from "../../helper/messageAuth.js";
 import Group from "../../models/Group.js";
@@ -28,13 +28,13 @@ export default async (message) => {
         const data = await bot.getChat(channels[index]);
         message += `${+index + 1}) ${data.title} (${data.id})\n`;
       } catch (error) {
-        logMessage(error.message, error);
+        logMessage(error.message, { error, errorSource: message });
         message += `${+index + 1}) ${channels[index]}\n`;
       }
     }
 
     await bot.sendMessage(chatId, message);
   } catch (error) {
-    logMessage(error.message, error);
+    logMessage(error.message, { error, errorSource: message });
   }
 };

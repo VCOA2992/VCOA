@@ -2,7 +2,7 @@
  * All commands related to telegram channels
  */
 
-import bot from "../bot.js";
+import bot from "../config/bot.js";
 
 import addChannel from "../controllers/channel/addChannel.js";
 import deleteChannel from "../controllers/channel/deleteChannel.js";

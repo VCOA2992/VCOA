@@ -5,7 +5,7 @@
  */
 
 import messageAuth from "../../helper/messageAuth.js";
-import bot from "../../bot.js";
+import bot from "../../config/bot.js";
 import Group from "../../models/Group.js";
 import deleteChannel from "../../helper/deleteChannel.js";
 import logMessage from "../../helper/logMessage.js";
@@ -40,6 +40,6 @@ export default async (message, [, channelId]) => {
       message_id: messageId,
     });
   } catch (error) {
-    logMessage(error.message, error);
+    logMessage(error.message, { error, errorSource: message });
   }
 };

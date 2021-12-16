@@ -1,7 +1,9 @@
-import bot from "../bot.js";
+import bot from "../config/bot.js";
 import { LOG_CHANNEL } from "../config/config.js";
 
-export default async (message, error) => {
+export default async (message, options) => {
+  const { error, errorSource } = options || {};
+
   console.log(message);
 
   if (error) console.log(error);
@@ -10,6 +12,19 @@ export default async (message, error) => {
     let messageToBeSent = `${message}`;
 
     if (error) messageToBeSent += `\n\n\`${error}\``;
+
+    if (errorSource) {
+      const date = new Date(errorSource.date * 1000);
+      messageToBeSent +=
+        `\n\n***Message ID***: ${errorSource.message_id}` +
+        `\n***Chat ID***: ${errorSource.chat.id} (${errorSource.chat.type})` +
+        `\n***From***: ${errorSource.from.first_name} ${errorSource.from.last_name} (@${errorSource.from.username})` +
+        `\n***Text***: \`${errorSource.text}\`` +
+        `\n***Date***: ${date.toLocaleString()}`;
+
+      if (errorSource.chat.title)
+        messageToBeSent += `\n***Group***: ${errorSource.chat.title}`;
+    }
 
     await bot.sendMessage(LOG_CHANNEL, messageToBeSent, {
       parse_mode: "markdown",

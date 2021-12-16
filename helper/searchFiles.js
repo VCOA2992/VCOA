@@ -1,6 +1,6 @@
 import createFile from "../models/createFile.js";
 import Fuse from "fuse.js";
-import bot from "../bot.js";
+import bot from "../config/bot.js";
 import allButtons from "../config/allButtons.js";
 import generateInlineKeyboards from "./generateInlineKeyboards.js";
 

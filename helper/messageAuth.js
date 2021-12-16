@@ -1,4 +1,4 @@
-import bot from "../bot.js";
+import bot from "../config/bot.js";
 import { AUTHORIZED_USERS } from "../config/config.js";
 
 export default async (message, options) => {

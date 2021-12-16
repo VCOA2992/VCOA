@@ -13,7 +13,7 @@ const connectDB = async () => {
       useUnifiedTopology: true,
     });
 
-    logMessage("MongoDB Connected!");
+    logMessage("Bot is now ready");
   } catch (err) {
     console.error(err.message);
     // Exit process with failure

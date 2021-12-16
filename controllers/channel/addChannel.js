@@ -7,8 +7,8 @@
 import messageAuth from "../../helper/messageAuth.js";
 import Group from "../../models/Group.js";
 import createFile from "../../models/createFile.js";
-import bot from "../../bot.js";
-import client from "../../client.js";
+import bot from "../../config/bot.js";
+import client from "../../config/client.js";
 import { Api } from "telegram";
 import logMessage from "../../helper/logMessage.js";
 
@@ -91,6 +91,6 @@ export default async (message, [, channelId]) => {
       chatId,
       "Error Occured while adding channel, Please check logs for more info"
     );
-    logMessage(error.message, error);
+    logMessage(error.message, { error, errorSource: message });
   }
 };

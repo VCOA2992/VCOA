@@ -25,6 +25,6 @@ export default async (message) => {
       fileSize: Math.trunc(media.file_size / 1024 / 1024),
     }).save();
   } catch (error) {
-    logMessage(error.message, error);
+    logMessage(error.message, { error, errorSource: message });
   }
 };

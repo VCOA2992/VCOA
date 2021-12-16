@@ -1,7 +1,7 @@
 /* 
     
 */
-import bot from "../bot.js";
+import bot from "../config/bot.js";
 
 /*
  * @desc     Log all related errors
