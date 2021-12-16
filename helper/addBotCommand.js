@@ -22,4 +22,4 @@ allCommands.push({
   description: "To get list of all channels that are added to a group",
 });
 
-bot.setMyCommands(allCommands, { scope: { type: "all_group_chats" } });
+bot.setMyCommands(allCommands, { scope: { type: "all_chat_administrators" } });
