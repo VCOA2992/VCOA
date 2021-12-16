@@ -9,8 +9,10 @@ export default async (message, error) => {
   if (LOG_CHANNEL) {
     let messageToBeSent = `${message}`;
 
-    if (error) messageToBeSent += `\n<code>${error}</code>`;
+    if (error) messageToBeSent += `\n\n\`${error}\``;
 
-    await bot.sendMessage(LOG_CHANNEL, messageToBeSent);
+    await bot.sendMessage(LOG_CHANNEL, messageToBeSent, {
+      parse_mode: "markdown",
+    });
   }
 };
