@@ -21,19 +21,19 @@ export default async (message) => {
       return await bot.sendMessage(chatId, "No channels found");
 
     const channels = group.channels;
-    let message = "All channels added to this group are:\n";
+    let infoMessage = "All channels added to this group are:\n";
 
     for (let index in channels) {
       try {
         const data = await bot.getChat(channels[index]);
-        message += `${+index + 1}) ${data.title} (${data.id})\n`;
+        infoMessage += `${+index + 1}) ${data.title} (${data.id})\n`;
       } catch (error) {
         logMessage(error.message, { error, errorSource: message });
-        message += `${+index + 1}) ${channels[index]}\n`;
+        infoMessage += `${+index + 1}) ${channels[index]}\n`;
       }
     }
 
-    await bot.sendMessage(chatId, message);
+    await bot.sendMessage(chatId, infoMessage);
   } catch (error) {
     logMessage(error.message, { error, errorSource: message });
   }

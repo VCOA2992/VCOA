@@ -87,10 +87,9 @@ export default async (message, [, channelId]) => {
       message_id: messageId,
     });
   } catch (error) {
-    await bot.sendMessage(
-      chatId,
-      "Error Occured while adding channel, Please check logs for more info"
-    );
-    logMessage(error.message, { error, errorSource: message });
+    const errorMessage =
+      "Error Occured while adding channel, Please check logs for more info";
+    await bot.sendMessage(chatId, errorMessage);
+    logMessage(errorMessage, { error, errorSource: message });
   }
 };
