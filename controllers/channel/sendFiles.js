@@ -12,6 +12,8 @@ import logMessage from "../../helper/logMessage.js";
 export default async (message, match) => {
   const chatId = message.chat.id;
 
+  if (message.chat.type !== "private") return;
+
   const response = match[1].split("-");
 
   try {
