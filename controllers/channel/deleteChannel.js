@@ -13,7 +13,8 @@ import logMessage from "../../helper/logMessage.js";
 export default async (message, [, channelId]) => {
   const chatId = message.chat.id;
 
-  messageAuth(message, { authUser: true });
+  const error = await messageAuth(message, { authUser: true });
+  if (error) return;
 
   const group = await Group.findOne({ chatId });
 

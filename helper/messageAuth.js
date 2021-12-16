@@ -6,17 +6,21 @@ export default async (message, options) => {
 
   if (message.chat.type !== "group" && message.chat.type !== "supergroup")
     if (options && options.noReply) return "INVALID_CHAT";
-    else
+    else {
       await bot.sendMessage(
         chatId,
         "Sorry but this command is meant to be used only in groups"
       );
+      return "INVALID_CHAT";
+    }
 
   if (options && options.authUser) {
-    if (!AUTHORIZED_USERS.includes(String(message.from.id)))
+    if (!AUTHORIZED_USERS.includes(String(message.from.id))) {
       await bot.sendMessage(
         chatId,
         "Sorry but you are not authorized to use this bot"
       );
+      return "NOT_AUTHORIZED";
+    }
   }
 };

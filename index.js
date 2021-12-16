@@ -7,3 +7,5 @@ connectDB();
 import "./commands/channel.js";
 import "./commands/utils.js";
 import "./commands/callbacks.js";
+
+import "./helper/addBotCommand.js";

@@ -12,7 +12,8 @@ import Group from "../../models/Group.js";
 export default async (message) => {
   const chatId = message.chat.id;
 
-  messageAuth(message, { authUser: true });
+  const error = await messageAuth(message, { authUser: true });
+  if (error) return;
 
   try {
     const group = await Group.findOne({ chatId });
