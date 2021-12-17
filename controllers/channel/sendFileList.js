@@ -10,6 +10,7 @@ import bot from "../../config/bot.js";
 import logMessage from "../../helper/logMessage.js";
 
 export default async (message) => {
+  console.log(message.text)
   if (message.text.length < 3) return;
 
   const chatId = message.chat.id;
