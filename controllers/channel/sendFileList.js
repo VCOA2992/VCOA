@@ -10,7 +10,6 @@ import bot from "../../config/bot.js";
 import logMessage from "../../helper/logMessage.js";
 
 export default async (message) => {
-  console.log(message.text)
   if (message.text.length < 3) return;
 
   const chatId = message.chat.id;
@@ -25,7 +24,6 @@ export default async (message) => {
 
     const files = await searchFiles(query, group.channels);
     if (files.length < 1) return;
-    console.log(`Total Files found: ${files.length} for ${message.text}`)
 
     const buttons = await generateButtons(files, query, messageId, chatId);
 
