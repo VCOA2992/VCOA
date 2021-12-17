@@ -25,6 +25,7 @@ export default async (message) => {
 
     const files = await searchFiles(query, group.channels);
     if (files.length < 1) return;
+    console.log(`Total Files found: ${files.length} for ${message.text}`)
 
     const buttons = await generateButtons(files, query, messageId, chatId);
 
