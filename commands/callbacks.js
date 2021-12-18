@@ -17,6 +17,5 @@ bot.on("callback_query", async (query) => {
     pagination(query);
   else{
     await bot.answerCallbackQuery(query.id);
-    console.log(`You are not in authorized users.\nUsers: ${AUTHORIZED_USERS}`);
   }
 });
