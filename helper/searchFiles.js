@@ -26,7 +26,7 @@ const allMovies = async (channels) => {
 const searchFromMovies = (query, data) => {
   const option = {
     keys: ["caption"],
-    threshold: 0.4,
+    threshold: 0.3,
   };
 
   const fuse = new Fuse(data, option);
