@@ -12,7 +12,7 @@ bot.on("callback_query", async (query) => {
 
   if (
     userWhoClicked === userWhoRequested ||
-    AUTHORIZED_USERS.includes(userWhoClicked)
+    AUTHORIZED_USERS.includes(String(userWhoClicked))
   )
     pagination(query);
   else{
