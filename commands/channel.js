@@ -40,7 +40,7 @@ bot.onText(/^\/delall/, deleteAllChannels);
  * @desc     Shows list of all connected channels
  * @access   Authorized Users
  */
-bot.onText(/^\/filterstats/, filterStats);
+bot.onText(/^\/filters/, filterStats);
 
 /*
  * @command  /start [search <group-id>-<query>, <channel-id>-<message-id>]
