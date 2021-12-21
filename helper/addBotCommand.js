@@ -18,7 +18,7 @@ allCommands.push({
 });
 
 allCommands.push({
-  command: "/filterstats",
+  command: "/filters",
   description: "To get list of all channels that are added to a group",
 });
 
