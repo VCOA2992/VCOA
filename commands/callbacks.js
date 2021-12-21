@@ -16,6 +16,6 @@ bot.on("callback_query", async (query) => {
   )
     pagination(query);
   else{
-    await bot.answerCallbackQuery(query.id);
+    await bot.answerCallbackQuery("This request was not done by you. Please send your request to continue", {show_alert: true});
   }
 });
