@@ -9,6 +9,12 @@ export default (data, options) => {
       text: "⬅️ Back",
       callback_data: options.backLink,
     });
+  
+  if (options && options.pages)
+    navigationButtons.push({
+      text: `📃 Pages ${options.pages.currentPage}/${options.pages.totalPages}`,
+      callback_data: `pages`,
+    });
 
   if (options && options.nextLink)
     navigationButtons.push({
@@ -17,13 +23,7 @@ export default (data, options) => {
     });
 
   buttons.push(navigationButtons);
-
-  if (options && options.pages)
-    bottomNavigationButtons.push({
-      text: `📃 Pages ${options.pages.currentPage}/${options.pages.totalPages}`,
-      callback_data: `pages`,
-    });
-
+  
   if (options && options.sendAllFileLink)
     bottomNavigationButtons.push({
       text: "Send all files",
