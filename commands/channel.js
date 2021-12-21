@@ -36,7 +36,7 @@ bot.onText(/^\/del (.+)/, deleteChannel);
 bot.onText(/^\/delall/, deleteAllChannels);
 
 /*
- * @command  /filterstats
+ * @command  /filters
  * @desc     Shows list of all connected channels
  * @access   Authorized Users
  */
