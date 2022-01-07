@@ -11,6 +11,11 @@ import logMessage from "../../helper/logMessage.js";
 
 export default async (message) => {
   if (message.text.length < 3) return;
+  // Temporary Fix
+  const blockedWords = ["mp4", "mkv", "avi", "mp3", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2019", "2020", "2021", "2022"]
+  if (message.text.toLowerCase().startsWith(".") return;
+  const textContainsBlockedWord = blockedWords.some(word => message.text.toLowerCase().includes(word));
+  if (textContainsBlockedWord) return;
 
   const chatId = message.chat.id;
   const { text: query, message_id: messageId } = message;
