@@ -28,7 +28,7 @@ export default async (message, match) => {
       let files = await searchFiles(query, group.channels);
       if (files.length < 1) return;
       
-      files = files.slice(0, 60)
+      files = files.slice(0, 60);
 
       for (const file of files) {
         await bot.copyMessage(chatId, file.fromId, file.messageId);
