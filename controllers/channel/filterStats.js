@@ -27,14 +27,14 @@ export default async (message) => {
     for (let index in channels) {
       try {
         const data = await bot.getChat(channels[index]);
-        infoMessage += `${+index + 1}) ${data.title} (${data.id})\n`;
+        infoMessage += `${+index + 1}) ${data.title} \`${data.id}\`\n`;
       } catch (error) {
         logMessage(error.message, { error, errorSource: message });
         infoMessage += `${+index + 1}) ${channels[index]}\n`;
       }
     }
 
-    await bot.sendMessage(chatId, infoMessage);
+    await bot.sendMessage(chatId, infoMessage, {parse_mode: "markdown"});
   } catch (error) {
     logMessage(error.message, { error, errorSource: message });
   }
