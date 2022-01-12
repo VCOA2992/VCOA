@@ -8,11 +8,31 @@ import { searchFiles } from "../../helper/searchFiles.js";
 import Group from "../../models/Group.js";
 import bot from "../../config/bot.js";
 import logMessage from "../../helper/logMessage.js";
+import { REQUIRED_CHAT_TO_JOIN } from "../../config/config.js";
 
 export default async (message, match) => {
   const chatId = message.chat.id;
 
   if (message.chat.type !== "private") return;
+
+  try {
+    for (const requiredChat of REQUIRED_CHAT_TO_JOIN) {
+      const chat = await bot.getChatMember(requiredChat, message.from.id);
+      if (chat.status === "left")
+        throw new Error("User is not added to the chat");
+    }
+  } catch (error) {
+    let buttons = [];
+    for (const requiredChat of REQUIRED_CHAT_TO_JOIN) {
+      const chat = await bot.getChat(requiredChat);
+      buttons.push([{ text: chat.title, url: chat.invite_link }]);
+    }
+    return await bot.sendMessage(
+      chatId,
+      "Looks like you aren't joined to some of our groups and channels. Please join given channel below to get your movies",
+      { reply_markup: JSON.stringify({ inline_keyboard: buttons }) }
+    );
+  }
 
   const response = match[1].split("-");
 
@@ -27,7 +47,7 @@ export default async (message, match) => {
 
       let files = await searchFiles(query, group.channels);
       if (files.length < 1) return;
-      
+
       files = files.slice(0, 60);
 
       for (const file of files) {

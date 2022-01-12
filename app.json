@@ -30,7 +30,12 @@
       "value": ""
     },
     "LOG_CHANNEL": {
-      "description": "Channel ID where you want to log error messages",
+      "description": "Channel ID where you want to log error messages of bot (Optional)",
+      "required": false,
+      "value": ""
+    },
+    "REQUIRED_CHAT_TO_JOIN": {
+      "description": "Chat Id/username of channels/groups where you want your users to be joined to get files [Separate in spaces] (Optional)",
       "required": false,
       "value": ""
     }
