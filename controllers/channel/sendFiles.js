@@ -13,6 +13,8 @@ import { REQUIRED_CHAT_TO_JOIN } from "../../config/config.js";
 export default async (message, match) => {
   const chatId = message.chat.id;
 
+  const response = match[1].split("-");
+
   if (message.chat.type !== "private") return;
 
   try {
@@ -25,16 +27,28 @@ export default async (message, match) => {
     let buttons = [];
     for (const requiredChat of REQUIRED_CHAT_TO_JOIN) {
       const chat = await bot.getChat(requiredChat);
-      buttons.push([{ text: chat.title, url: chat.invite_link }]);
+      const lastButton = buttons[buttons.length - 1];
+
+      // Adds button to last list of buttons if there is only 1 button
+      if (lastButton && lastButton.length !== 2)
+        lastButton.push({ text: chat.title, url: chat.invite_link });
+      else buttons.push([{ text: chat.title, url: chat.invite_link }]);
     }
+
+    const me = await bot.getMe();
+    const botLink = "t.me/" + me.username;
+    buttons.push([
+      {
+        text: `Try Again`,
+        url: `${botLink}?start=-${response.slice(1).join("-")}`,
+      },
+    ]);
     return await bot.sendMessage(
       chatId,
       "Looks like you aren't joined to some of our groups and channels. Please join given channel below to get your movies",
       { reply_markup: JSON.stringify({ inline_keyboard: buttons }) }
     );
   }
-
-  const response = match[1].split("-");
 
   try {
     if (response[0] === "search") {
