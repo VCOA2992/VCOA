@@ -1,3 +1,5 @@
+process.env["NTBA_FIX_350"] = 1;
+
 import connectDB from "./config/db.js";
 
 // Connect Databases

@@ -44,16 +44,9 @@ export default async (message, match) => {
         url: `${botLink}?start=-${response.slice(1).join("-")}`,
       },
     ]);
-    // return await bot.sendMessage(
-    //   chatId,
-    //   "Looks like you aren't joined to some of our groups and channels. Please join given channel below to get your files",
-    //   { }
-    // );
 
     const fileOptions = {
-      // Explicitly specify the file name.
       filename: "caution.jpg",
-      // Explicitly specify the MIME type.
       contentType: "image/jpeg",
     };
 
@@ -96,8 +89,21 @@ export default async (message, match) => {
       await bot.copyMessage(chatId, channelId, messageId);
     }
   } catch (error) {
-    await bot.sendMessage(chatId, `Be sure I am added to all the channels`);
+    const fileOptions = {
+      filename: "caution.jpg",
+      contentType: "image/jpeg",
+    };
 
-    logMessage(error.message, { error, errorSource: message });
+    const stream = fs.createReadStream("assets/images/404.jpg");
+
+    return await bot.sendPhoto(
+      chatId,
+      stream,
+      {
+        caption: `***⚠️ Error:- \n404 Error Occured, Looks like file is deleted🤔. Please try requesting for files later!***`,
+        parse_mode: "markdown",
+      },
+      fileOptions
+    );
   }
 };
