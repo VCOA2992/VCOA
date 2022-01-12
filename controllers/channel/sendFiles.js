@@ -9,6 +9,7 @@ import Group from "../../models/Group.js";
 import bot from "../../config/bot.js";
 import logMessage from "../../helper/logMessage.js";
 import { REQUIRED_CHAT_TO_JOIN } from "../../config/config.js";
+import fs from "fs";
 
 export default async (message, match) => {
   const chatId = message.chat.id;
@@ -43,10 +44,30 @@ export default async (message, match) => {
         url: `${botLink}?start=-${response.slice(1).join("-")}`,
       },
     ]);
-    return await bot.sendMessage(
+    // return await bot.sendMessage(
+    //   chatId,
+    //   "Looks like you aren't joined to some of our groups and channels. Please join given channel below to get your files",
+    //   { }
+    // );
+
+    const fileOptions = {
+      // Explicitly specify the file name.
+      filename: "caution.jpg",
+      // Explicitly specify the MIME type.
+      contentType: "image/jpeg",
+    };
+
+    const stream = fs.createReadStream("assets/images/caution.jpg");
+
+    return await bot.sendPhoto(
       chatId,
-      "Looks like you aren't joined to some of our groups and channels. Please join given channel below to get your files",
-      { reply_markup: JSON.stringify({ inline_keyboard: buttons }) }
+      stream,
+      {
+        caption: `***⚠️ Caution:- \nFor Getting Your Files, First You Have to Join Listed "Channels/Groups" Given Below👇🏻***`,
+        reply_markup: JSON.stringify({ inline_keyboard: buttons }),
+        parse_mode: "markdown",
+      },
+      fileOptions
     );
   }
 

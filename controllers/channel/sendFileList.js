@@ -10,7 +10,6 @@ import bot from "../../config/bot.js";
 import logMessage from "../../helper/logMessage.js";
 
 export default async (message) => {
-  console.log("HELLO");
   if (message.text.length < 3) return;
   // Temporary Fix
   const blockedWords = [
