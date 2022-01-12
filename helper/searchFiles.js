@@ -4,7 +4,7 @@ import bot from "../config/bot.js";
 import allButtons from "../config/allButtons.js";
 import generateInlineKeyboards from "./generateInlineKeyboards.js";
 
-const allMovies = async (channels) => {
+const allFiles = async (channels) => {
   let data = [];
 
   for await (const channelId of channels) {
@@ -23,7 +23,7 @@ const allMovies = async (channels) => {
   return data;
 };
 
-const searchFromMovies = (query, data) => {
+const searchFromFiles = (query, data) => {
   const option = {
     keys: ["caption"],
     threshold: 0.2,
@@ -92,8 +92,8 @@ export async function generateButtons(data, query, messageId, chatId) {
 }
 
 export async function searchFiles(query, channels) {
-  let data = await allMovies(channels);
-  let filteredData = searchFromMovies(query, data);
+  let data = await allFiles(channels);
+  let filteredData = searchFromFiles(query, data);
 
   return filteredData;
 }
