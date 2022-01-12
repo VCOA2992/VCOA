@@ -45,7 +45,7 @@ export default async (message, match) => {
     ]);
     return await bot.sendMessage(
       chatId,
-      "Looks like you aren't joined to some of our groups and channels. Please join given channel below to get your movies",
+      "Looks like you aren't joined to some of our groups and channels. Please join given channel below to get your files",
       { reply_markup: JSON.stringify({ inline_keyboard: buttons }) }
     );
   }
