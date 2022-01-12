@@ -100,7 +100,7 @@ export default async (message, match) => {
       chatId,
       stream,
       {
-        caption: `***⚠️ Error:- \n404 Error Occured, Looks like file is deleted🤔. Please try requesting for files later!***`,
+        caption: `***⚠️ Error:- \n404 Error Occured, Looks like file is deleted 🤔. Please contact respective group administrator for help!***`,
         parse_mode: "markdown",
       },
       fileOptions
