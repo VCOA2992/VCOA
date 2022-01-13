@@ -1,5 +1,6 @@
 import bot from "../config/bot.js";
 import { AUTHORIZED_USERS } from "../config/config.js";
+import fs from "fs";
 
 export default async (message, options) => {
   const chatId = message.chat.id;
@@ -27,10 +28,23 @@ export default async (message, options) => {
 
   if (options && options.authUser) {
     if (!AUTHORIZED_USERS.includes(String(message.from.id))) {
-      await bot.sendMessage(
+      const fileOptions = {
+        filename: "error.jpg",
+        contentType: "image/jpeg",
+      };
+
+      const stream = fs.createReadStream("assets/images/error.jpg");
+
+      await bot.sendPhoto(
         chatId,
-        "Sorry but you are not authorized to use this bot"
+        stream,
+        {
+          caption: `***⚠️ Error:- \nSorry but you aren't allowed to use these commands. 🛑 These commands are only allowed for admins!***`,
+          parse_mode: "markdown",
+        },
+        fileOptions
       );
+
       return "NOT_AUTHORIZED";
     }
   }
