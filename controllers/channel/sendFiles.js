@@ -32,8 +32,9 @@ export default async (message, match) => {
 
       // Adds button to last list of buttons if there is only 1 button
       if (lastButton && lastButton.length !== 2)
-        lastButton.push({ text: chat.title, url: chat.invite_link });
-      else buttons.push([{ text: chat.title, url: chat.invite_link }]);
+        lastButton.push({ text: `Join ${chat.title}`, url: chat.invite_link });
+      else
+        buttons.push([{ text: `Join ${chat.title}`, url: chat.invite_link }]);
     }
 
     const me = await bot.getMe();
