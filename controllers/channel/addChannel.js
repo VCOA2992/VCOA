@@ -6,11 +6,9 @@
 
 import messageAuth from "../../helper/messageAuth.js";
 import Group from "../../models/Group.js";
-import createFile from "../../models/createFile.js";
 import bot from "../../config/bot.js";
-import client from "../../config/client.js";
-import { Api } from "telegram";
 import logMessage from "../../helper/logMessage.js";
+import addFiles from "../../helper/addFiles.js";
 
 export default async (message, [, channelId]) => {
   const chatId = message.chat.id;
@@ -41,45 +39,9 @@ export default async (message, [, channelId]) => {
       addingMessage
     );
 
-    // Adding all Files to collection with name $channelId
-    const File = createFile(channelId);
+    const files = await addFiles(channelId);
 
-    await client.connect();
-    await client.getDialogs({ limit: 50 });
-
-    const fileTypes = [
-      Api.InputMessagesFilterVideo,
-      Api.InputMessagesFilterDocument,
-    ];
-
-    const files = [];
-
-    for (const fileType of fileTypes) {
-      for await (const message of client.iterMessages(parseInt(channelId), {
-        limit: 10000000,
-        filter: fileType,
-      })) {
-        if (message.restrictionReason) {
-          logMessage(
-            `${message.id} of ${channelId} has been skipped due to restriction`,
-            message.restrictionReason.reason
-          );
-          continue;
-        }
-
-        files.push({
-          _id: message.id,
-          caption: message.message,
-          fileSize: Math.trunc(message.media.document.size / 1024 / 1024),
-        });
-      }
-    }
-
-    await client.disconnect();
-
-    await File.insertMany(files);
     group.channels.push(channelId);
-
     await group.save();
 
     const addingFinished = `Channel Added Successfully\nTotal Files: ${files.length}`;

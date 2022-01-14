@@ -9,7 +9,7 @@ const bot = new TelegramBot(BOT_TOKEN, {
   polling: {
     interval: 1000,
     params: {
-      limit: 10,
+      limit: 1,
     },
   },
 
