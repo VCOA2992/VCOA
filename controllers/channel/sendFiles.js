@@ -27,6 +27,7 @@ export default async (message, match) => {
   } catch (error) {
     let buttons = [];
     for (const requiredChat of REQUIRED_CHAT_TO_JOIN) {
+      if (!requiredChat) continue;
       const chat = await bot.getChat(requiredChat);
       const lastButton = buttons[buttons.length - 1];
 

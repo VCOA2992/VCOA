@@ -38,6 +38,11 @@
       "description": "Chat Id/username of channels/groups where you want your users to be joined to get files [Separate in spaces] (Optional)",
       "required": false,
       "value": ""
+    },
+    "WELCOME_MESSAGE": {
+      "description": "Message which will be sent by bot on using /start command (Optional)",
+      "required": false,
+      "value": ""
     }
   },
   "buildpacks": [

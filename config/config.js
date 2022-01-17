@@ -14,3 +14,4 @@ export const LOG_CHANNEL = process.env.LOG_CHANNEL;
 export const REQUIRED_CHAT_TO_JOIN = (
   process.env.REQUIRED_CHAT_TO_JOIN || ""
 ).split(" ");
+export const WELCOME_MESSAGE = process.env.WELCOME_MESSAGE;
