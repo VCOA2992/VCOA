@@ -7,9 +7,25 @@
 import { searchFiles } from "../../helper/searchFiles.js";
 import Group from "../../models/Group.js";
 import bot from "../../config/bot.js";
-import logMessage from "../../helper/logMessage.js";
-import { REQUIRED_CHAT_TO_JOIN } from "../../config/config.js";
+import {
+  REQUIRED_CHAT_TO_JOIN,
+  LIMITED_FILES_PER_DAY,
+} from "../../config/config.js";
 import fs from "fs";
+import User from "../../models/User.js";
+
+function msToTime(ms) {
+  let text = "";
+  let seconds = (ms / 1000).toFixed(1);
+  let minutes = (ms / (1000 * 60)).toFixed(1);
+  let hours = (ms / (1000 * 60 * 60)).toFixed(1);
+  let days = (ms / (1000 * 60 * 60 * 24)).toFixed(1);
+  if (seconds < 60) text = seconds + " Sec";
+  else if (minutes < 60) text = minutes + " Min";
+  else if (hours < 24) text = hours + " Hrs";
+  else text = days + " Days";
+  return text;
+}
 
 export default async (message, match) => {
   const chatId = message.chat.id;
@@ -67,6 +83,23 @@ export default async (message, match) => {
   }
 
   try {
+    if (LIMITED_FILES_PER_DAY) {
+      let user = await User.findById(message.from.id);
+
+      if (user) {
+        if (new Date().getDay() !== new Date(user.createdAt).getDay()) {
+          user.remove();
+          user = await User.create({ _id: message.from.id, chatId });
+        } else if (user.numberOfFilesUserGot >= LIMITED_FILES_PER_DAY)
+          return await bot.sendMessage(
+            chatId,
+            `Sorry but limit has been reached for today.\nYou can get files after ${msToTime(
+              new Date(new Date().setHours(24, 0, 0, 0)) - Date.now()
+            )}`
+          );
+      }
+    }
+
     if (response[0] === "search") {
       // Search files using query and send
       const groupId = "-" + response[1];
@@ -90,7 +123,16 @@ export default async (message, match) => {
 
       await bot.copyMessage(chatId, channelId, messageId);
     }
+    if (LIMITED_FILES_PER_DAY) {
+      let user = await User.findById(message.from.id);
+
+      if (!user) user = await new User({ _id: message.from.id, chatId });
+
+      user.numberOfFilesUserGot += 1;
+      await user.save();
+    }
   } catch (error) {
+    console.log(error);
     const fileOptions = {
       filename: "caution.jpg",
       contentType: "image/jpeg",

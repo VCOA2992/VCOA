@@ -17,3 +17,5 @@ export const REQUIRED_CHAT_TO_JOIN = (
 export const WELCOME_MESSAGE =
   process.env.WELCOME_MESSAGE &&
   process.env.WELCOME_MESSAGE.replace(/\\n/g, "\n");
+export const LIMITED_FILES_PER_DAY =
+  parseInt(process.env.LIMITED_FILES_PER_DAY) || "";
