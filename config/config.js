@@ -13,7 +13,7 @@ export const MONGODB_URI = process.env.MONGODB_URI;
 export const LOG_CHANNEL = process.env.LOG_CHANNEL;
 export const REQUIRED_CHAT_TO_JOIN = (
   process.env.REQUIRED_CHAT_TO_JOIN || ""
-).split(" ");
+).split(" ").filter(value => value !== "");
 export const WELCOME_MESSAGE =
   process.env.WELCOME_MESSAGE &&
   process.env.WELCOME_MESSAGE.replace(/\\n/g, "\n");
