@@ -7,7 +7,10 @@ const sequelize = new Sequelize(DATABASE_URL, {
   port: 5432,
   ssl: true,
   dialectOptions: {
-    ssl: true,
+    ssl: {
+      require: true,
+      rejectUnauthorized: false,
+    },
   },
   pool: {
     max: 5,
