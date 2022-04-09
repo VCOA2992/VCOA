@@ -14,9 +14,13 @@ export default async (message) => {
   const error = await messageAuth(message, { authUser: true, private: true });
   if (error) return;
 
-  const messageToForward = message.reply_to_message.message_id;
-  if (!messageToForward)
+  let messageToForward;
+
+  try {
+    messageToForward = message.reply_to_message.message_id;
+  } catch (error) {
     return await bot.sendMessage(chatId, "Please mention a message to send");
+  }
 
   const sendingMessage = await bot.sendMessage(
     chatId,
