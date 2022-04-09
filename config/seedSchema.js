@@ -1,2 +1,4 @@
-require("../models/ChatUser");
-require("./sqlite").sync();
+import "../models/ChatUser.js";
+import database from "./sqlite.js";
+
+database.sync();
