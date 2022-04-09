@@ -28,7 +28,7 @@ export default async (message) => {
     "Forwarding your message to members"
   );
 
-  await sequelize.sync();
+  // await sequelize.sync();
   let usersToSend = await ChatUser.findAll();
 
   if (!usersToSend.length > 0)
