@@ -5,6 +5,10 @@ const sequelize = new Sequelize(DATABASE_URL, {
   dialect: "postgres",
   host: "localhost",
   port: 5432,
+  ssl: true,
+  dialectOptions: {
+    ssl: true,
+  },
   pool: {
     max: 5,
     min: 0,
