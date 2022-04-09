@@ -11,11 +11,12 @@ export const STRING_SESSION = String(process.env.STRING_SESSION);
 export const BOT_TOKEN = process.env.BOT_TOKEN;
 export const MONGODB_URI = process.env.MONGODB_URI;
 export const LOG_CHANNEL = process.env.LOG_CHANNEL;
-export const REQUIRED_CHAT_TO_JOIN = (
-  process.env.REQUIRED_CHAT_TO_JOIN || ""
-).split(" ").filter(value => value !== "");
+export const REQUIRED_CHAT_TO_JOIN = (process.env.REQUIRED_CHAT_TO_JOIN || "")
+  .split(" ")
+  .filter((value) => value !== "");
 export const WELCOME_MESSAGE =
   process.env.WELCOME_MESSAGE &&
   process.env.WELCOME_MESSAGE.replace(/\\n/g, "\n");
 export const LIMITED_FILES_PER_DAY =
   parseInt(process.env.LIMITED_FILES_PER_DAY) || "";
+export const DATABASE_URL = process.env.DATABASE_URL || "";
