@@ -14,6 +14,7 @@ import addChannelFile from "../controllers/channel/addChannelFile.js";
 import editChannelFileCaption from "../controllers/channel/editChannelFileCaption.js";
 import addUser from "../controllers/channel/addUser.js";
 import broadcastMessage from "../controllers/channel/broadcastMessage.js";
+import scannedUsersInfo from "../controllers/channel/scannedUsersInfo.js";
 // import checkCaption from "../controllers/channel/checkCaption.js";
 
 /*
@@ -83,7 +84,15 @@ bot.on("edited_channel_post_caption", editChannelFileCaption);
 bot.on("text", sendFileList);
 
 /*
+ * @command  /broadcast (Mention a message to broadcast)
  * @desc     Broadcast a message
- * @access   Authorized users
+ * @access   Authorized Users
  */
 bot.onText(/^\/broadcast/, broadcastMessage);
+
+/*
+ * @command  /scannedusers
+ * @desc     Provide info of number of users who are scanned by bot for forwarding messages
+ * @access   Authorized users
+ */
+bot.onText(/^\/scannedusers/, scannedUsersInfo);

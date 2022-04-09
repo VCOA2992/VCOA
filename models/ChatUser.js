@@ -1,9 +1,27 @@
-import mongoose from "mongoose";
+import sequelize from "../config/sqlite.js";
+import { DataTypes } from "sequelize";
 
-const chatUserSchema = new mongoose.Schema({
-  chatId: { type: String, maxlength: 50, required: true },
-  name: { type: String, required: true },
-  userName: { type: String, required: false },
-});
+const User = sequelize.define(
+  "User",
+  {
+    chatId: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    userName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+  },
+  {
+    timestamps: false,
+    createdAt: false,
+    updatedAt: false,
+  }
+);
 
-export default mongoose.model("ChatUser", chatUserSchema);
+export default User;

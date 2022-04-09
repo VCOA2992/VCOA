@@ -1,10 +1,11 @@
 /*
- * @command  /add <channel-id>
- * @desc     Command to add channel content
+ * @command  /broadcast (Mention a message to broadcast)
+ * @desc     Broadcast a message
  * @access   Authorized Users
  */
 
 import bot from "../../config/bot.js";
+import sequelize from "../../config/sqlite.js";
 import messageAuth from "../../helper/messageAuth.js";
 import ChatUser from "../../models/ChatUser.js";
 
@@ -27,7 +28,9 @@ export default async (message) => {
     "Forwarding your message to members"
   );
 
-  const usersToSend = await ChatUser.find({});
+  await sequelize.sync();
+  let usersToSend = await ChatUser.findAll();
+
   if (!usersToSend.length > 0)
     return await bot.editMessageText(
       "Not enough users are recorded yet, Please try again later.",
@@ -36,6 +39,11 @@ export default async (message) => {
         message_id: sendingMessage.message_id,
       }
     );
+
+  usersToSend = usersToSend.map(({ dataValues }) => {
+    const { chatId, name, username } = dataValues;
+    return { chatId, name, username };
+  });
 
   await bot.editMessageText(
     `Sending your message to ${usersToSend.length} members`,
@@ -49,7 +57,8 @@ export default async (message) => {
     try {
       await bot.copyMessage(user.chatId, chatId, messageToForward);
     } catch (error) {
-      await ChatUser.remove({ chatId: user.chatId });
+      // await ChatUser.remove({ chatId: user.chatId });
+      continue;
     }
   }
 

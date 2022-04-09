@@ -1,3 +1,4 @@
+import sequelize from "../../config/sqlite.js";
 import ChatUser from "../../models/ChatUser.js";
 
 export default async (message) => {
@@ -5,17 +6,19 @@ export default async (message) => {
 
   if (message.chat.type !== "private") return;
 
-  const userExists =
-    (await (await ChatUser.find({ chatId: message.chat.id })).length) > 0;
+  await sequelize.sync();
+  const userExists = await ChatUser.findOne({
+    where: { chatId: message.chat.id },
+  });
   if (userExists) return;
 
-  const user = await new ChatUser({
+  const user = {
     chatId: message.chat.id,
     name: `${message.from.first_name ? message.from.first_name : ""} ${
       message.from.last_name ? message.from.last_name : ""
     }`,
-    userName: `${message.from.username ? message.from.username : ""}`,
-  });
-
-  await user.save();
+    userName: `${message.from.username ? message.from.username : "none"}`,
+  };
+  // console.log(user);
+  await ChatUser.create(user);
 };

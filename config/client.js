@@ -11,8 +11,6 @@ const appId = APP_ID;
 const apiHash = API_HASH;
 const stringSession = new StringSession(STRING_SESSION);
 
-Logger.setLevel("none");
-
 let client;
 
 (async () => {
@@ -21,4 +19,5 @@ let client;
   });
 })();
 
+client.setLogLevel("none");
 export default client;

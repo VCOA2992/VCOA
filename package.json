@@ -14,6 +14,8 @@
     "mongoose": "^6.1.5",
     "node-telegram-bot-api": "^0.56.0",
     "node-telegram-keyboard-wrapper": "^3.0.0",
+    "sequelize": "^6.18.0",
+    "sqlite3": "^5.0.2",
     "telegram": "^2.5.22"
   },
   "engines": {
