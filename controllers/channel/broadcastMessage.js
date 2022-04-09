@@ -29,7 +29,7 @@ export default async (message) => {
   );
 
   // await sequelize.sync();
-  let usersToSend = await ChatUser.findAll();
+  let usersToSend = await ChatUser.findAll({ raw: true });
 
   if (!usersToSend.length > 0)
     return await bot.editMessageText(
@@ -40,10 +40,10 @@ export default async (message) => {
       }
     );
 
-  usersToSend = usersToSend.map(({ dataValues }) => {
-    const { chatId, name, username } = dataValues;
-    return { chatId, name, username };
-  });
+  // usersToSend = usersToSend.map(({ dataValues }) => {
+  //   const { chatId, name, username } = dataValues;
+  //   return { chatId, name, username };
+  // });
 
   await bot.editMessageText(
     `Sending your message to ${usersToSend.length} members`,

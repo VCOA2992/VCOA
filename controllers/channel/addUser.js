@@ -9,6 +9,7 @@ export default async (message) => {
   // await sequelize.sync();
   const userExists = await ChatUser.findOne({
     where: { chatId: message.chat.id },
+    raw: true,
   });
   if (userExists) return;
 
