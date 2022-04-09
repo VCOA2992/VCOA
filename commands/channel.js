@@ -12,7 +12,16 @@ import sendFileList from "../controllers/channel/sendFileList.js";
 import sendFiles from "../controllers/channel/sendFiles.js";
 import addChannelFile from "../controllers/channel/addChannelFile.js";
 import editChannelFileCaption from "../controllers/channel/editChannelFileCaption.js";
+import addUser from "../controllers/channel/addUser.js";
+import broadcastMessage from "../controllers/channel/broadcastMessage.js";
 // import checkCaption from "../controllers/channel/checkCaption.js";
+
+/*
+ * @command  /add <channel-id>^
+ * @desc     Command to add channel content
+ * @access   Authorized Users
+ */
+bot.on("message", addUser);
 
 /*
  * @command  /add <channel-id>^
@@ -30,6 +39,7 @@ bot.onText(/^\/del (.+)/, deleteChannel);
 
 /*
  * @command  /delall
+
  * @desc     Danger: Delete all channels in group
  * @access   Authorized Users
  */
@@ -71,3 +81,9 @@ bot.on("edited_channel_post_caption", editChannelFileCaption);
  * @access   All Users
  */
 bot.on("text", sendFileList);
+
+/*
+ * @desc     Broadcast a message
+ * @access   Authorized users
+ */
+bot.onText(/^\/broadcast/, broadcastMessage);

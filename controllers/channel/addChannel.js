@@ -15,7 +15,6 @@ export default async (message, [, channelId]) => {
 
   const error = await messageAuth(message, { authUser: true });
   if (error) return;
-  console.log(error);
 
   try {
     let group = await Group.findOne({ chatId });
