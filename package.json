@@ -17,6 +17,6 @@
     "telegram": "^2.5.22"
   },
   "engines": {
-    "node": "17.x"
+    "node": "14.x"
   }
 }
