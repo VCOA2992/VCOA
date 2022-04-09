@@ -6,7 +6,7 @@ export default async (message) => {
 
   if (message.chat.type !== "private") return;
 
-  // await sequelize.sync();
+  await sequelize.sync();
   const userExists = await ChatUser.findOne({
     where: { chatId: message.chat.id },
     raw: true,
